@@ -23,8 +23,8 @@
                 <div class="login_box_img">
                     <img class="img-fluid" src="<?= base_url('assets'); ?> /img/login.jpg" alt="">
                     <div class="hover">
-                        <h4>New to our website?</h4>
-                        <p>There are advances being made in science and technology everyday, and a good example of this is the</p>
+                        <h4>Don't Have Account</h4>
+                      
                         <a class="main_btn" href="<?= base_url('user/registration'); ?>">Create an Account</a>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 <div class="login_form_inner">
                     <?= $this->session->flashdata('message');  ?>
                     <h3>Log in to enter</h3>
-                    <form class="row login_form" method="post" id="contactForm" novalidate="novalidate">
+                    <form class="row login_form" method="post">
                         <div class="col-md-12 form-group">
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email Adress">
                             <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Des 2019 pada 19.32
+-- Waktu pembuatan: 02 Jan 2020 pada 16.17
 -- Versi server: 10.1.37-MariaDB
 -- Versi PHP: 7.3.1
 
@@ -46,7 +46,8 @@ INSERT INTO `customer` (`id_customer`, `nama`, `email`, `password`, `no_hp`, `al
 (1, 'rafi', 'asd.asd@asd', '$2y$10$ru8LithP6zw5UUaea9WVte11BXkmd6hS3wO8RizzmK3', '123123123', 'rawasari', 2),
 (2, 'qew', 'qwe@qwe.qwe', '$2y$10$j7CwY571kgTDP9SP4iil/ug2A3UzwVdoFTL9sjQ15si', '123123213', 'qweqwe', 2),
 (3, 'qq', 'qq@qq.qq', '$2y$10$aGMKItI59wVih4vMDaJUUeXUxmkC6Hr9eJZPtUyZ3pP', '1313', 'qqq', 2),
-(4, 'asdasdasd', 'aaa@a.a', 'aaa', '123123', 'asdasd', 2);
+(4, 'asdasdasd', 'aaa@a.a', 'aaa', '123123', 'asdasd', 2),
+(6, 'budi', 'bbb@b.b', 'bbb', '0879854654', 'kemang', 2);
 
 -- --------------------------------------------------------
 
@@ -67,19 +68,13 @@ CREATE TABLE `isi_order` (
 --
 
 INSERT INTO `isi_order` (`id_isi_order`, `id_order`, `id_ukuran_kertas`, `jumlah`, `file`) VALUES
-(1, 1, '4', 7, 'ee.png'),
-(2, 1, '1', 3, 'ee.png'),
-(3, 1, '2', 4, 'ee.png'),
-(4, 1, '1', 1, 'ee.png'),
-(5, 1, '1', 1, 'ee.png'),
-(6, 1, '1', 1, 'ee.png'),
-(7, 1, '3', 1, 'ee.png'),
-(8, 1, '2', 1, 'ee.png'),
-(9, 1, '4', 4, 'ee.png'),
-(10, 1, '3', 5, 'ee.png'),
-(11, 1, '2', 15, 'ee.png'),
-(12, 1, '2', 20, ''),
-(13, 1, '2', 30, 'logo1.PNG');
+(15, 3, '2', 3, 'boys.jpg'),
+(16, 3, '8', 2, 'ifuai1.png'),
+(17, 3, '12', 4, 'org.PNG'),
+(21, 3, '2', 12, 'WhatsApp_Image_2019-11-23_at_1_25_15_PM.jpeg'),
+(22, 3, '2', 7, 'LPJ_FORTEX_2_0(1).docx'),
+(23, 4, '3', 2, 'ibal21.png'),
+(24, 5, '2', 1, 'ibal22.png');
 
 -- --------------------------------------------------------
 
@@ -113,17 +108,39 @@ CREATE TABLE `orderan` (
   `id_order` int(11) NOT NULL,
   `id_customer` int(11) NOT NULL,
   `tgl_order` date NOT NULL,
-  `jumah_order` int(11) NOT NULL,
+  `jumlah_order` int(11) NOT NULL,
+  `total_harga` int(11) NOT NULL,
   `status_order` varchar(20) NOT NULL,
-  `id_operator` int(11) NOT NULL
+  `id_operator` int(11) NOT NULL,
+  `bukti_booking` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `orderan`
 --
 
-INSERT INTO `orderan` (`id_order`, `id_customer`, `tgl_order`, `jumah_order`, `status_order`, `id_operator`) VALUES
-(1, 4, '2019-12-25', 2, 'BELUM BAYAR', 1);
+INSERT INTO `orderan` (`id_order`, `id_customer`, `tgl_order`, `jumlah_order`, `total_harga`, `status_order`, `id_operator`, `bukti_booking`) VALUES
+(3, 4, '0000-00-00', 5, 521000, 'BELUM BAYAR', 0, 'ibal22.png'),
+(5, 6, '2020-01-02', 1, 20000, 'BAYAR DP', 0, 'Untitled_Diagram_(17).png');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tipe_kertas`
+--
+
+CREATE TABLE `tipe_kertas` (
+  `id_tipe` int(11) NOT NULL,
+  `tipe` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tipe_kertas`
+--
+
+INSERT INTO `tipe_kertas` (`id_tipe`, `tipe`) VALUES
+(1, 'Kertas Ukuran A'),
+(2, 'Kertas Ukuran B');
 
 -- --------------------------------------------------------
 
@@ -132,20 +149,39 @@ INSERT INTO `orderan` (`id_order`, `id_customer`, `tgl_order`, `jumah_order`, `s
 --
 
 CREATE TABLE `ukuran_kertas` (
+  `id_tipe` int(11) NOT NULL,
   `id` int(11) NOT NULL,
   `kertas` varchar(10) NOT NULL,
-  `harga` int(11) NOT NULL
+  `harga` int(11) NOT NULL,
+  `gambar` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `ukuran_kertas`
 --
 
-INSERT INTO `ukuran_kertas` (`id`, `kertas`, `harga`) VALUES
-(1, 'A0', 25000),
-(2, 'A1', 20000),
-(3, 'A2', 15000),
-(4, 'A3', 10000);
+INSERT INTO `ukuran_kertas` (`id_tipe`, `id`, `kertas`, `harga`, `gambar`) VALUES
+(1, 1, 'A0', 25000, 'a0.png'),
+(1, 2, 'A1', 20000, 'a1.png'),
+(1, 3, 'A2', 15000, 'a2.png'),
+(1, 4, 'A3', 10000, 'a3.png'),
+(1, 5, 'A4', 2000, 'a4.png'),
+(1, 6, 'A5', 1000, 'a5.png'),
+(1, 7, 'A6', 700, 'a6.png'),
+(1, 8, 'A7', 500, 'a7.png'),
+(1, 9, 'A8', 300, 'a8.png'),
+(1, 10, 'A9', 200, 'a9.png'),
+(1, 11, 'A10', 100, 'a10.png'),
+(2, 12, 'B0', 20000, 'b0.png'),
+(2, 13, 'B1', 18000, 'b1.png'),
+(2, 14, 'B2', 15000, 'b2.png'),
+(2, 15, 'B3', 13000, 'b3.png'),
+(2, 16, 'B4', 11000, 'b4.png'),
+(2, 17, 'B5', 9000, 'b6.png'),
+(2, 18, 'B7', 7000, 'b7.png'),
+(2, 19, 'B8', 3000, 'b8.png'),
+(2, 20, 'B9', 2000, 'b9.png'),
+(2, 21, 'B10', 1000, 'b10.png');
 
 --
 -- Indexes for dumped tables
@@ -176,6 +212,12 @@ ALTER TABLE `orderan`
   ADD PRIMARY KEY (`id_order`);
 
 --
+-- Indeks untuk tabel `tipe_kertas`
+--
+ALTER TABLE `tipe_kertas`
+  ADD PRIMARY KEY (`id_tipe`);
+
+--
 -- Indeks untuk tabel `ukuran_kertas`
 --
 ALTER TABLE `ukuran_kertas`
@@ -189,13 +231,13 @@ ALTER TABLE `ukuran_kertas`
 -- AUTO_INCREMENT untuk tabel `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `isi_order`
 --
 ALTER TABLE `isi_order`
-  MODIFY `id_isi_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_isi_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT untuk tabel `operator`
@@ -207,13 +249,19 @@ ALTER TABLE `operator`
 -- AUTO_INCREMENT untuk tabel `orderan`
 --
 ALTER TABLE `orderan`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `tipe_kertas`
+--
+ALTER TABLE `tipe_kertas`
+  MODIFY `id_tipe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `ukuran_kertas`
 --
 ALTER TABLE `ukuran_kertas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

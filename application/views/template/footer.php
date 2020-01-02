@@ -109,6 +109,11 @@
 <script src="<?= base_url('assets'); ?> /vendors/counter-up/jquery.counterup.js"></script>
 <script src="<?= base_url('assets'); ?> /js/mail-script.js"></script>
 <script src="<?= base_url('assets'); ?> /js/theme.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+<script src="<?= base_url('assets'); ?> /js/gmaps.min.js"></script>
+<script src="<?= base_url('assets'); ?> /js/jquery.form.js"></script>
+<script src="<?= base_url('assets'); ?> /js/jquery.validate.min.js"></script>
+<script src="<?= base_url('assets'); ?> /js/contact.js"></script>
 </body>
 
 </html>

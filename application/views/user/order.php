@@ -13,7 +13,7 @@
 		</div>
 	</div>
 </section>
-<?= $this->session->flashdata('message');  ?>
+
 <!--================End Home Banner Area =================-->
 
 <!--================Single Product Area =================-->
@@ -67,6 +67,8 @@
 		</div>
 		<div class="order_details_table">
 			<h2>Order Details</h2>
+
+			<?= $this->session->flashdata('message');  ?>
 			<div class="table-responsive">
 				<table class="table">
 					<thead>
@@ -77,30 +79,58 @@
 							<th scope="col">Jumlah</th>
 							<th scope="col">Harga Satuan</th>
 							<th scope="col">Total</th>
+							<th scope="col">Hapus</th>
+
 						</tr>
 					</thead>
 					<tbody>
 						<?php $i = 1;
+						$total_harga = 0;
 						foreach ($order as $ord) :
 						?>
 							<tr>
-								<th><?= $i; ?></th>
-								<th><?= $ord['file']; ?></th>
-								<th><?= $ord['kertas']; ?></th>
-								<th><?= $ord['jumlah']; ?></th>
-								<th>Rp. <?= number_format($ord['harga']); ?></th>
+								<td><?= $i; ?></td>
+								<td><?= $ord['file']; ?></td>
+								<td><?= $ord['kertas']; ?></td>
+
+								<td>
+									<a href="<?= base_url(); ?>user/minus/<?= $ord['id_isi_order']; ?>" class="badge badge-warning mr-3"> -</a><?= $ord['jumlah']; ?>
+
+									<a href="<?= base_url(); ?>user/plus/<?= $ord['id_isi_order']; ?>" class="badge badge-success ml-3"> +</a>
+								</td>
+
+
+								<td>Rp. <?= number_format($ord['harga']); ?></td>
 								<?php $ttl = $ord['harga'] * $ord['jumlah']; ?>
-								<th>Rp. <?= number_format($ttl); ?></th>
+								<td>Rp. <?= number_format($ttl); ?></td>
+
+								<td>
+									<a href="<?= base_url(); ?>user/hapus/<?= $ord['id_isi_order']; ?>" class="fas fa-trash-alt ml-3"></a>
+								</td>
 							</tr>
 
 
-						<?php $i += 1;
-						endforeach; ?>
+						<?php
+							$total_harga += $ttl;
+							$i += 1;
+						endforeach;
 
+						?>
 
 					</tbody>
+					<tr>
+						<td><b>Total Harga</b></td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td><b>Rp. <?= number_format($total_harga); ?> </b></td>
+
+					</tr>
 				</table>
 			</div>
+
+			<a style="margin-left:48%" class="btn btn-primary" href="<?= base_url(); ?>user/s_checkout/<?= $total_harga; ?>">Checkout</a>
 		</div>
 	</div>
 	<!--================End Single Product Area =================-->

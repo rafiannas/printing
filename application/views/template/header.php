@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="<?= base_url('assets'); ?> /css/bootstrap.css">
     <link rel="stylesheet" href="<?= base_url('assets'); ?> /vendors/linericon/style.css">
     <link rel="stylesheet" href="<?= base_url('assets'); ?> /css/font-awesome.min.css">
+    <link href=" <?= base_url('assets'); ?>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="<?= base_url('assets'); ?> /vendors/owl-carousel/owl.carousel.min.css">
     <link rel="stylesheet" href="<?= base_url('assets'); ?> /vendors/lightbox/simpleLightbox.css">
     <link rel="stylesheet" href="<?= base_url('assets'); ?> /vendors/nice-select/css/nice-select.css">
@@ -22,32 +23,25 @@
 </head>
 
 <body>
+    <?php $kertas = $this->db->get('tipe_kertas')->result_array(); ?>
 
 
     <!--================Header Menu Area =================-->
     <header class="header_area">
         <div class="top_menu row m0">
             <div class="container-fluid">
-                <div class="float-left">
-                    <p>Call Us: 012 44 5698 7456 896</p>
-                </div>
+
+                <?php $cek = $this->session->userdata('email'); ?>
                 <div class="float-right">
                     <ul class="right_side">
                         <li>
-                            <a href="<?= base_url('user/login'); ?>">
-                                Login/Register
-                            </a>
+                            <?php if ($cek) { ?>
+                                <a href="<?= base_url('user/login'); ?>">
+                                    Halo <?= $user['nama']; ?>
+                                </a>
+                            <?php } ?>
                         </li>
-                        <li>
-                            <a href="#">
-                                My Account
-                            </a>
-                        </li>
-                        <li>
-                            <a href="contact.html">
-                                Contact Us
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -56,7 +50,7 @@
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
-                    <a class="navbar-brand logo_h" href="index.html">
+                    <a class="navbar-brand logo_h" href="<?= base_url('user/index'); ?>">
                         <img src="<?= base_url('assets'); ?> /img/logo.png" alt="">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,14 +71,13 @@
                                     </li>
 
                                     <li class="nav-item submenu dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
+                                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">List Harga</a>
                                         <ul class="dropdown-menu">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="blog.html">Blog</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="single-blog.html">Blog Details</a>
-                                            </li>
+                                            <?php foreach ($kertas as $k) : ?>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="<?= base_url('user/kertas/'); ?><?= $k['id_tipe']; ?>"> <?= $k['tipe']; ?></a>
+                                                </li>
+                                            <?php endforeach; ?>
                                         </ul>
                                     </li>
                                     <li class="nav-item submenu dropdown">
@@ -100,59 +93,38 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="contact.html">Contact</a>
+                                        <a class="nav-link" href="<?= base_url('user/kontak'); ?>">Hubungi Kami</a>
                                     </li>
                                 </ul>
                             </div>
 
                             <div class="col-lg-5">
                                 <ul class="nav navbar-nav navbar-right right_nav pull-right">
-                                    <hr>
-                                    <li class="nav-item">
-                                        <a href="#" class="icons">
-                                            <i class="fa fa-search" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
-
-                                    <hr>
-
-
-                                    <li class="nav-item submenu dropdown">
-                                        <a href="#" class="icons">
-                                            <i class="fa fa-user" aria-hidden="true"></i>
-                                        </a>
-                                        <?php
-                                        $cek = $this->session->userdata('email');
-                                        if ($cek) :
-                                        ?>
+                                    <?php
+                                    if ($cek) {
+                                    ?>
+                                        <hr>
+                                        <li class="nav-item submenu dropdown">
+                                            <a href="#" class="icons">
+                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                            </a>
                                             <ul class="dropdown-menu">
                                                 <li class="nav-item">
-                                                    <a class="nav-link" href="login.html">My Profile</a>
+                                                    <a class="nav-link" href="<?= base_url('customer'); ?>">My Profile</a>
 
                                                 <li class="nav-item">
-                                                    <a class="nav-link" href="tracking.html">Logout</a>
-
+                                                    <a class="nav-link" href="<?= base_url('user/logout'); ?>">Logout</a>
                                             </ul>
-                                        <?php endif; ?>
+                                        </li>
+                                    <?php } else { ?>
 
-                                    </li>
+                                        <li class="nav-item">
+                                            <a href="<?= base_url('user/login'); ?>" class="icons">
+                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
 
-                                    <hr>
-
-                                    <li class="nav-item">
-                                        <a href="#" class="icons">
-                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
-
-                                    <hr>
-
-                                    <li class="nav-item">
-                                        <a href="#" class="icons">
-                                            <i class="lnr lnr lnr-cart"></i>
-                                        </a>
-                                    </li>
-
+                                    <?php } ?>
                                     <hr>
                                 </ul>
                             </div>

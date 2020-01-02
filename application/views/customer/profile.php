@@ -30,44 +30,84 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="login_form_inner">
-                    <?= $this->session->flashdata('message');  ?>
-                    <h3>MY PROFILE</h3>
 
-                    <h2 ><?= $user['nama']; ?></h2>
-                    <h2 class="blog_details"><?= $user['email']; ?></h2>
+                <?= $this->session->flashdata('message');  ?>
+                <div class="section-title text-center">
+                    <h2>My Profile</h2>
+
                 </div>
+                <br>
+                <div class="contact_info center">
+                    <div class="info_item">
+                        <i class="fas fa-user ml-5 fa-2x"></i>
+                        <h6 style="margin-left: 10%"><?= $user['nama']; ?></h6>
+                    </div>
+                    <br>
+                    <div class="info_item">
+                        <i class="fab fa-google ml-5 fa-2x"></i>
+                        <h6 style="margin-left: 10%"><?= $user['email']; ?></h6>
+                    </div>
+                    <br>
+                    <div class="info_item">
+                        <i class="fas fa-key ml-5 fa-2x"></i>
+                        <h6 style="margin-left: 10%"><?= $user['password']; ?></h6>
+                    </div>
+                    <br>
+                    <div class="info_item">
+                        <i class="fas fa-phone ml-5 fa-2x"></i>
+                        <h6 style="margin-left: 10%"><?= $user['no_hp']; ?></h6>
+                    </div>
+                    <br>
+                    <div class="info_item">
+                        <i class="fas fa-home ml-5 fa-2x"></i>
+                        <h6 style="margin-left: 10%"><?= $user['alamat']; ?></h6>
+                    </div>
+
+
+                </div>
+
             </div>
         </div>
+        <div class="order_details_table">
+            <h2>Order History</h2>
+
+            <?= $this->session->flashdata('message');  ?>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Tgl</th>
+                            <th scope="col">Jumlah File</th>
+                            <th scope="col">Status Order</th>
+                            <th scope="col">Total Harga</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1;
+
+                        foreach ($order as $ord) :
+                        ?>
+                            <tr>
+                                <td><?= $i; ?></td>
+                                <td><?= $ord['tgl_order']; ?></td>
+                                <td><?= $ord['jumlah_order']; ?></td>
+                                <td><?= $ord['status_order']; ?></td>
+                                <td>Rp. <?= number_format($ord['total_harga']); ?></td>
+
+                            </tr>
+                        <?php
+                            $i += 1;
+                        endforeach;
+                        ?>
+                </table>
+            </div>
+
+
+        </div>
     </div>
+
+
 </section>
 <!--================End Login Box Area =================-->
-
-<!--================ Subscription Area ================-->
-<section class="subscription-area section_gap">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="section-title text-center">
-                    <h2>Subscribe for Our Newsletter</h2>
-                    <span>We won’t send any kind of spam</span>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div id="mc_embed_signup">
-                    <form target="_blank" novalidate action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&id=92a4423d01" method="get" class="subscription relative">
-                        <input type="email" name="EMAIL" placeholder="Email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required="">
-                        <!-- <div style="position: absolute; left: -5000px;">
-									<input type="text" name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="">
-								</div> -->
-                        <button type="submit" class="newsl-btn">Get Started</button>
-                        <div class="info"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--================ End Subscription Area ================-->

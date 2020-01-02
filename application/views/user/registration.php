@@ -22,20 +22,20 @@
                 <div class="login_box_img">
                     <img class="img-fluid" src="<?= base_url('assets'); ?> /img/login.jpg" alt="">
                     <div class="hover">
-                        <h4>New to our website?</h4>
-                        <p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-                        <a class="main_btn" href="#">Create an Account</a>
+                        <h4>Login</h4>
+
+                        <a class="main_btn" href="<?= base_url('user/login'); ?>">have Account </a>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="login_form_inner reg_form">
-                    
+
                     <h3>Create an Account</h3>
-                    <form class="row login_form" method="post" id="contactForm" novalidate="novalidate">
+                    <form class="row login_form" method="post" action="<?= base_url('user/registration'); ?>">
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-                            <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
+                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Name">
+                            <?= form_error('nama', '<small class="text-danger pl-3">', '</small>'); ?>
                         </div>
 
                         <div class="col-md-12 form-group">

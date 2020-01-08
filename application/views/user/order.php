@@ -3,11 +3,11 @@
 	<div class="banner_inner d-flex align-items-center">
 		<div class="container">
 			<div class="banner_content text-center">
-				<h2>Single Product Page</h2>
+				<h2>Order</h2>
 				<div class="page_link">
-					<a href="index.html">Home</a>
-					<a href="category.html">Category</a>
-					<a href="single-product.html">Product Details</a>
+					<a>Home</a>
+					<a>Order</a>
+
 				</div>
 			</div>
 		</div>
@@ -53,13 +53,15 @@
 
 					<div class="custom-file">
 						<input type="file" name="file" id="file">
+
 					</div>
 				</div>
-
+				<span>Max size 5 Mb</span>
 				<div class="card_area mt-5">
 					<button class="main_btn" type="submit" name="submit">Tambah</button>
 
 				</div>
+
 				</form>
 
 			</div>

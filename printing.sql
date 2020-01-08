@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jan 2020 pada 16.17
+-- Waktu pembuatan: 08 Jan 2020 pada 05.00
 -- Versi server: 10.1.37-MariaDB
 -- Versi PHP: 7.3.1
 
@@ -68,13 +68,7 @@ CREATE TABLE `isi_order` (
 --
 
 INSERT INTO `isi_order` (`id_isi_order`, `id_order`, `id_ukuran_kertas`, `jumlah`, `file`) VALUES
-(15, 3, '2', 3, 'boys.jpg'),
-(16, 3, '8', 2, 'ifuai1.png'),
-(17, 3, '12', 4, 'org.PNG'),
-(21, 3, '2', 12, 'WhatsApp_Image_2019-11-23_at_1_25_15_PM.jpeg'),
-(22, 3, '2', 7, 'LPJ_FORTEX_2_0(1).docx'),
-(23, 4, '3', 2, 'ibal21.png'),
-(24, 5, '2', 1, 'ibal22.png');
+(32, 7, '12', 5, 'download.jpg');
 
 -- --------------------------------------------------------
 
@@ -110,7 +104,7 @@ CREATE TABLE `orderan` (
   `tgl_order` date NOT NULL,
   `jumlah_order` int(11) NOT NULL,
   `total_harga` int(11) NOT NULL,
-  `status_order` varchar(20) NOT NULL,
+  `status_order` int(11) NOT NULL,
   `id_operator` int(11) NOT NULL,
   `bukti_booking` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -120,8 +114,28 @@ CREATE TABLE `orderan` (
 --
 
 INSERT INTO `orderan` (`id_order`, `id_customer`, `tgl_order`, `jumlah_order`, `total_harga`, `status_order`, `id_operator`, `bukti_booking`) VALUES
-(3, 4, '0000-00-00', 5, 521000, 'BELUM BAYAR', 0, 'ibal22.png'),
-(5, 6, '2020-01-02', 1, 20000, 'BAYAR DP', 0, 'Untitled_Diagram_(17).png');
+(7, 4, '2020-01-06', 1, 100000, 3, 0, 'download.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `status_order`
+--
+
+CREATE TABLE `status_order` (
+  `id` int(11) NOT NULL,
+  `status_order` varchar(20) NOT NULL,
+  `gambar` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `status_order`
+--
+
+INSERT INTO `status_order` (`id`, `status_order`, `gambar`) VALUES
+(1, 'BAYAR DP', 'pending.png'),
+(2, 'PRINTING', 'printing.png'),
+(3, 'DONE', 'done.png');
 
 -- --------------------------------------------------------
 
@@ -212,6 +226,12 @@ ALTER TABLE `orderan`
   ADD PRIMARY KEY (`id_order`);
 
 --
+-- Indeks untuk tabel `status_order`
+--
+ALTER TABLE `status_order`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `tipe_kertas`
 --
 ALTER TABLE `tipe_kertas`
@@ -237,7 +257,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT untuk tabel `isi_order`
 --
 ALTER TABLE `isi_order`
-  MODIFY `id_isi_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_isi_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT untuk tabel `operator`
@@ -249,7 +269,13 @@ ALTER TABLE `operator`
 -- AUTO_INCREMENT untuk tabel `orderan`
 --
 ALTER TABLE `orderan`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT untuk tabel `status_order`
+--
+ALTER TABLE `status_order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tipe_kertas`

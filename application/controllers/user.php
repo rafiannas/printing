@@ -3,14 +3,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User extends CI_Controller
 {
-    // public function __construct()
-    // {
-    //     cek_login();
-    // }
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('mUser');
+    }
 
     public function index()
     {
         $data['user'] = $this->db->get_where('customer', ['email' => $this->session->userdata('email')])->row_array();
+        $id_cus = $data['user']['id_customer'];
+
+
         $this->load->view('template/header', $data);
         $this->load->view('user/index');
         $this->load->view('template/footer');
@@ -102,13 +106,9 @@ class User extends CI_Controller
         #$this->form_validation->set_rules('file', 'File', 'required|trim');
         $id_c = $data['user']['id_customer'];
 
-        $qq = " SELECT * FROM orderan, isi_order, ukuran_kertas, customer
-        WHERE customer.id_customer = orderan.id_customer
-        AND orderan.status_order = 'BELUM BAYAR'
-        AND orderan.id_order = isi_order.id_order
-        AND isi_order.id_ukuran_kertas = ukuran_kertas.id AND orderan.id_customer = $id_c
-        ";
-        $data['order'] = $this->db->query($qq)->result_array();
+
+
+        $data['order'] = $this->mUser->getOrder($id_c);
 
         if ($this->form_validation->run() == false) {
 
@@ -117,13 +117,8 @@ class User extends CI_Controller
             $this->load->view('template/footer');
         } else {
 
-            $q = "SELECT * 
-            FROM orderan 
-            WHERE id_customer = $id_c 
-            AND status_order = 'BELUM BAYAR'
-            ";
+            $cek = $this->mUser->cekOrder($id_c);
 
-            $cek = $this->db->query($q)->row_array();
             $uk = $this->input->post('kertas');
             $full_uk = $this->db->get_where('ukuran_kertas', ['kertas' => $uk])->row_array();
 
@@ -139,13 +134,8 @@ class User extends CI_Controller
                 $this->db->insert('orderan', $data_order);
 
 
-                $q2 = "SELECT * 
-                FROM orderan 
-                WHERE id_customer = $id_c
-                AND status_order = 'BELUM BAYAR' 
-                ";
 
-                $cek2 = $this->db->query($q2)->row_array();
+                $cek2 = $this->mUser->cekOrder($id_c);
 
                 $upload = $_FILES['file']['name'];
 
@@ -226,11 +216,10 @@ class User extends CI_Controller
     {
         $data['user'] = $this->db->get_where('customer', ['email' => $this->session->userdata('email')])->row_array();
 
-        $qk = "SELECT * FROM ukuran_kertas 
-        WHERE id_tipe = $id
-        ";
 
-        $data['kertas'] = $this->db->query($qk)->result_array();
+        $data['kertas'] = $this->mUser->getKertas($id);
+
+
         $this->load->view('template/header', $data);
         $this->load->view('user/kertas', $data);
         $this->load->view('template/footer');
@@ -290,7 +279,9 @@ class User extends CI_Controller
         $data['user'] = $this->db->get_where('customer', ['email' => $this->session->userdata('email')])->row_array();
         $id_cus = $data['user']['id_customer'];
 
-        $data['order'] = $this->db->get_where('orderan', ['id_customer' => $id_cus])->row_array();
+
+        $data['order'] = $this->mUser->cekOrder($id_cus);
+
         $id_ord = $data['order']['id_order'];
         $jmh_ord =  $data['order']['jumlah_order'] - 1;
 
@@ -309,7 +300,8 @@ class User extends CI_Controller
         $data['user'] = $this->db->get_where('customer', ['email' => $this->session->userdata('email')])->row_array();
         $id_cus = $data['user']['id_customer'];
 
-        $data['order'] = $this->db->get_where('orderan', ['id_customer' => $id_cus])->row_array();
+
+        $data['order'] = $this->mUser->cekOrder($id_cus);
         $id_ord =  $data['order']['id_order'];
 
 
@@ -326,15 +318,9 @@ class User extends CI_Controller
         $data['user'] = $this->db->get_where('customer', ['email' => $this->session->userdata('email')])->row_array();
         $id_cus = $data['user']['id_customer'];
 
-        $q = "SELECT * 
-        FROM orderan, customer 
-        WHERE orderan.status_order = 'BELUM BAYAR' 
-        AND customer.id_customer = orderan.id_customer 
-        AND orderan.id_customer = $id_cus ";
 
+        $data['order'] = $this->mUser->getCheckout($id_cus);
 
-
-        $data['order'] = $this->db->query($q)->row_array();
         $id_ord = $data['order']['id_order'];
 
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
@@ -371,13 +357,24 @@ class User extends CI_Controller
                     $this->db->set('bukti_booking', $new_file);
                 }
             }
-            $this->db->set('status_order', 'BAYAR DP');
+            $this->db->set('status_order', '1');
             $this->db->where('id_order', $id_ord);
             $this->db->update('orderan');
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil masukin Bukti</div>');
             redirect('customer');
         }
+    }
+    public function detail_order($id)
+    {
+        $data['user'] = $this->db->get_where('customer', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data['order'] = $this->mUser->getDetailOrder($id);
+        $data['fororder'] = $this->mUser->forOrder($id);
+
+        $this->load->view('template/header', $data);
+        $this->load->view('user/detail_order', $data);
+        $this->load->view('template/footer');
     }
 
 

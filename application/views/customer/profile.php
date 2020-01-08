@@ -1,4 +1,3 @@
-<!--================Home Banner Area =================-->
 <section class="banner_area">
     <div class="banner_inner d-flex align-items-center">
         <div class="container">
@@ -23,9 +22,9 @@
                 <div class="login_box_img">
                     <img class="img-fluid" src="<?= base_url('assets'); ?> /img/login.jpg" alt="">
                     <div class="hover">
-                        <h4>New to our website?</h4>
+                        <!--  <h4>New to our website?</h4>
                         <p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-                        <a class="main_btn" href="<?= base_url('user/registration'); ?>">Create an Account</a>
+                        <a class="main_btn" href="<?= base_url('user/registration'); ?>">Create an Account</a> -->
                     </div>
                 </div>
             </div>
@@ -77,10 +76,12 @@
                     <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Tgl</th>
+                            <th scope="col">Id Order</th>
+                            <th scope="col">Tanggal</th>
                             <th scope="col">Jumlah File</th>
                             <th scope="col">Status Order</th>
                             <th scope="col">Total Harga</th>
+                            <th scope="col">Aksi</th>
 
                         </tr>
                     </thead>
@@ -91,10 +92,12 @@
                         ?>
                             <tr>
                                 <td><?= $i; ?></td>
+                                <td><?= $ord['id_order']; ?></td>
                                 <td><?= $ord['tgl_order']; ?></td>
                                 <td><?= $ord['jumlah_order']; ?></td>
                                 <td><?= $ord['status_order']; ?></td>
                                 <td>Rp. <?= number_format($ord['total_harga']); ?></td>
+                                <td><a href="<?= base_url('user/detail_order'); ?>/<?= $ord['id_order']; ?>  ">Detail</a></td>
 
                             </tr>
                         <?php
@@ -110,4 +113,4 @@
 
 
 </section>
-<!--================End Login Box Area =================-->
+<!--================End Login Box Area =================
